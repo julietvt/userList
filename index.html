@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+</head>
+<body>
+
+<ul id="usersList">
+</ul>
+
+<script>
+    'use strict';
+
+    const users = [
+    {
+        id: 1,
+        name: "Спанч ",
+        surname: "Боб",
+        imageSrc: "https://images.ua.prom.st/805654045_w640_h640_multyashnye-geroi.jpg",
+    },
+    {
+        id:2,
+        name: "Джерри",
+        surname: "Дисней",
+        imageSrc: "https://i.pinimg.com/originals/b6/25/e8/b625e8f89436ec24e16d8cf48e5cd2a9.jpg",
+    },
+    {
+        id:3,
+        name: "Микки",
+        surname: "Маус",
+        imageSrc: "https://dekatop.com/wp-content/uploads/2015/11/mult_01.jpg",
+    },
+    {
+
+        id:4,
+        name: "Пикачу",
+        surname: "Покемон",
+        imageSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRg7Q36OrMbp78FIZNRXJExfXRi0CP87a7dOWN4JDy_I2aaZECD&usqp=CAU",
+    },
+    {
+        id:5,
+        name: "Волк",
+        surname: "Ну Погоди!",
+        imageSrc: "https://cs6.pikabu.ru/images/big_size_comm/2015-04_3/1428752470910.jpg",
+    },
+
+    ];
+
+    const userListElem = document.getElementById("usersList");
+
+    appendUsersListItems(userListElem, users);
+
+
+    function appendUsersListItems(usersListElem, users) {
+        users.forEach(
+            user => {
+                usersListElem.append(createUserListItemElem(user));
+            }
+        );
+    }
+
+    function createUserListItemElem(user) {
+
+        const userListItemElem = document.createElement("li");
+        userListItemElem.setAttribute("id", user.id);
+        userListItemElem.append(createUserCardElem(user));
+        return userListItemElem;
+    }
+
+    function createUserCardElem(user) {
+        const userCardWrapperElem = document.createElement("div");
+
+        userCardWrapperElem.classList.add('userCardWrapper');
+
+        userCardWrapperElem.append(createUserPictureElem(user));
+        userCardWrapperElem.append(createUserFullNameElem(user));
+        userCardWrapperElem.append(createDeleteButtonElem(user));
+
+        return userCardWrapperElem
+    }
+
+    function getUserPictureElem({imageSrc}) {
+        const userPictureElem = document.createElement('img');
+        userPictureElem.setAttribute('src', imageSrc ? imageSrc : "./assets/icons/user_icon.png");
+        userPictureElem.setAttribute("alt", "user picture");
+
+        return userPictureElem;
+    }
+
+    function createUserPictureElem(user) {
+        const userPictureContainerElem = document.createElement("div");
+        userPictureContainerElem.classList.add('userPictureContainer');
+
+        userPictureContainerElem.append(getUserPictureElem(user));
+
+        return userPictureContainerElem;
+    }
+
+    function createUserFullNameElem({name, surname}) {
+        const userFullNameElem = document.createElement("div");
+
+        userFullNameElem.innerText = `${name} ${surname}`;
+
+        return userFullNameElem;
+    }
+
+
+    function createDeleteButtonElem({id: userId}) {
+        const deleteButtonElem = document.createElement('img');
+
+        deleteButtonElem.classList.add('deleteButton');
+        deleteButtonElem.setAttribute('src', './assets/icons/cross.png');
+        deleteButtonElem.setAttribute('alt', 'DELETE');
+
+        deleteButtonElem.addEventListener('click', (event) => {
+
+            event.stopPropagation();
+            const userListItemElem = document.getElementById(userId);
+            userListItemElem.remove();
+
+        });
+
+        return deleteButtonElem;
+
+    }
+
+
+</script>
+</body>
+</html>
